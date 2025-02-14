@@ -2,8 +2,9 @@
 Implementation for the paper [ZeroER: Entity Resolution using Zero Labeled Examples.](https://arxiv.org/abs/1908.06049)
 
 ## Setup enviroment
-    conda env create -f environment.yml
-    conda activate ZeroER
+    Tested with python 3.7.
+
+    pip install -r requirements.txt
 
 ## How to use
 1. Put you dataset into the folder `datasets`. You should have a file `metadata.txt` in your data folder that specifies the file name of the table (and possibly right table and ground-truth table). For two table record linkage, you can refer to `datasets/fodors_zagats/metadata.txt`. 
