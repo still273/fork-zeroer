@@ -33,7 +33,7 @@ def run_zeroer(similarity_features_df, similarity_features_lr,id_dfs,true_labels
     time_m = time.process_time()
     y_test_pred = model.predict_PM(similarity_matrix_test)
     if true_labels_test is not None:
-        p, r, f1 = get_results(true_labels_test, y_test_pred)#, np.round(np.clip(y_pred + DEL, 0., 1.)).astype(int))
+        p, r, f1 = get_results(true_labels_test, np.round(y_test_pred))#, np.round(np.clip(y_pred + DEL, 0., 1.)).astype(int))
         print("Results after EM:")
         print("F1: {:0.2f}, Precision: {:0.2f}, Recall: {:0.2f}".format(f1, p, r))
     return y_test_pred, time_m

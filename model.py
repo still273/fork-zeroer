@@ -222,7 +222,7 @@ class ZeroerModel:
 
 
         P_M_test = pi_M / (pi_M + pi_U * prob_non_dup_over_dup)
-        P_M_test = np.round(np.clip(P_M_test, 0., 1.))
+        P_M_test = np.clip(P_M_test, 0., 1.)
         return P_M_test
 
     def enforce_transitivity(self, P_M, ids, id_tuple_to_index, model_l, model_r,LR_dup_free=False,LR_identical=False):
