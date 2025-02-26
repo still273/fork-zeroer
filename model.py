@@ -9,6 +9,7 @@ from sklearn.mixture import GaussianMixture
 from tqdm import tqdm
 from collections import defaultdict
 from sklearn.preprocessing import MinMaxScaler
+import time
 
 def getScaledSum(similarity_features):
     feature_sums = np.sum(similarity_features, axis=1)
@@ -438,9 +439,10 @@ class ZeroerModel:
             model_r = cls(sims_r, feature_names,y_init_r,id_df_r,c_bay=c_bay)
 
         convergence = ConvergenceMeter(10, 0.01, diff_fn=lambda a, b: np.linalg.norm(a - b))
-
+        results = []
         with tqdm(range(max_iter)) as pbar:
-            for i in pbar:
+            t_iter = time.process_time()
+            for iteration in pbar:
                 model.e_step()
                 if run_trans:
                     if LR_dup_free==False and LR_identical==False:
@@ -459,6 +461,8 @@ class ZeroerModel:
                     model_l.m_step()
 
                 convergence.offer(model.free_energy())
+                t_stop = time.process_time()
+
                 if convergence.is_converged:
                     break
                 if y_true is not None:
@@ -473,8 +477,9 @@ class ZeroerModel:
                             np.linalg.norm(model.P_M),
                             f1, p, r))
                     pbar.set_description_str(result_str)
+                    results += [[iteration, f1, p, r, t_stop-t_iter]]
 
-        return model, model.P_M
+        return model, model.P_M, results
 
 
 if __name__ == '__main__':
