@@ -441,8 +441,8 @@ class ZeroerModel:
         convergence = ConvergenceMeter(10, 0.01, diff_fn=lambda a, b: np.linalg.norm(a - b))
         results = []
         with tqdm(range(max_iter)) as pbar:
-            t_iter = time.process_time()
             for iteration in pbar:
+                t_iter = time.process_time()
                 model.e_step()
                 if run_trans:
                     if LR_dup_free==False and LR_identical==False:
