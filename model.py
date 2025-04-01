@@ -466,6 +466,7 @@ class ZeroerModel:
                 if convergence.is_converged:
                     break
                 if y_true is not None:
+
                     y_pred = np.round(np.clip(model.P_M + DEL, 0., 1.)).astype(int) \
                             if not hard else model.P_M.astype(int)
                     p, r, f1 = _get_results(y_true, y_pred)
@@ -477,7 +478,8 @@ class ZeroerModel:
                             np.linalg.norm(model.P_M),
                             f1, p, r))
                     pbar.set_description_str(result_str)
-                    results += [[iteration, f1, p, r, t_stop-t_iter]]
+                    t_test = time.process_time()
+                    results += [[iteration, f1, p, r, t_stop-t_iter, t_test-t_stop]]
 
         return model, model.P_M, results
 
